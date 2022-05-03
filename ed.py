@@ -28,6 +28,7 @@ def get_command_input(buffer: list[str], cursor: int, _: int)\
             return cursor, INS_MODE
         if line[0] == 'd':
             buffer.pop(cursor)
+            print(buffer[cursor], end='')
             return cursor, CMD_MODE
         if line[0] == 'p':
             print(buffer[cursor],end='')
@@ -52,7 +53,10 @@ def get_command_input(buffer: list[str], cursor: int, _: int)\
                 buffer.clear()
                 buffer.extend(file.readlines())
             return cursor, CMD_MODE
+        if line[0] == '$':
+            return len(buffer) - 1, CMD_MODE
         if type(int(line)) is int:
+            print(buffer[int(line) - 1], end='')
             return int(line) - 1, CMD_MODE
     except (ValueError, IndexError):
         pass
@@ -67,7 +71,7 @@ def get_text_input(buffer: list[str], cursor: int, mode: int)\
     if mode == CHG_MODE:
         buffer.pop(cursor)
     if len(line) == 1 and line[0] == '.':
-        return cursor, CMD_MODE
+        return cursor - 1, CMD_MODE
     buffer.insert(cursor, line + '\n')
     return cursor + 1, INS_MODE
 
