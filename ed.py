@@ -1,5 +1,6 @@
+
 ##
-## ed.py : a small python implementation of ed
+## Small python implementation of ed
 ##
 
 CMD_MODE = 0
